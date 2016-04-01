@@ -1,0 +1,46 @@
+[
+	{
+		"name":"Metallica",
+		"description":"Metallica in Concert", 
+		"location":"Angie, San Bruno",
+		"date":"2017-10-11",
+		"category":{
+			"id":"1",
+			"name":"Music"
+		}, 
+		"email":"metallica@angie.com"
+	},
+	{
+		"name":"Sherlock Holmes",
+		"description":"A intrigue movie",
+		"location":"Stephanie, Ocean Ave",
+		"date":"2016-01-11",
+		"category":{
+			"id":"2",
+			"name":"Movie"
+		}, 
+		"email":"sherlock@angie.com"
+	},
+	{
+		"name":"AC/DC America",
+		"description":"AC/DC America Tour", 
+		"location":"Lynn, South Bay",
+		"date":"2016-06-01",
+		"category":{
+			"id":"1",
+			"name":"Music"
+		}, 
+		"email":"acdc@angie.com"
+	},
+	{
+		"name":"PS 101 Launch",
+		"description":"Playstaion 101 Launch", 
+		"location":"Cindy, Dublin",
+		"date":"2027-12-24",
+		"category":{
+			"id":"3",
+			"name":"Game"
+		}, 
+		"email":"playstation@angie.com"
+	}
+]		

@@ -1,0 +1,236 @@
+
+<!-- BEGIN add-event view, same file as no backend available-->
+
+<div class="row" ng-controller='formController as eventController'>
+    <div class="col col-md-6 col-sm-8 col-lg-6">
+		
+		<script type="text/ng-template" id="error-messages">
+		<!-- angular injection error messages template -->
+			<div ng-message='required'>Field Required</div>
+			<div ng-message='minlength'>Not met required Minimum length</div>
+			<div ng-message='maxlength'>Exceed Maximum length</div>
+			
+		</script>
+        <div class="panel panel-primary">
+            <div class="panel-heading"><h3 class="h3">Add Event</h3></div>
+            <div class="panel-body">
+                <form class="form" role="form" id="addEventForm" ng-submit="eventController.submitForm(eventForm)"
+                      name="addEventForm" novalidate>
+
+                    <div class="row">
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+                            <div class="form-group" 
+								ng-class="{'has-error':addEventForm.eventName.$touched && addEventForm.eventName.$invalid,
+											'has-success':addEventForm.eventName.$touched && addEventForm.eventName.$valid}">
+                                <label for="eventName" class="control-label">Name</label>
+                                <input type="text" class="form-control" ng-model='eventForm.name' name="eventName"
+										required ng-minlength='3' ng-maxlength='50'
+										placeholder="Event Name...">
+								<!--bootstrap 'has-error':red text when error & bootstrap 'has-success':green border when correct-->
+                                <div ng-messages="addEventForm.eventName.$dirty && addEventForm.eventName.$error">
+									<div ng-message="required">Event Name is required</div>
+									<div ng-message='minlength'>Event Name minimum length 3 characters</div>
+									<div ng-message='maxlength'>Event Name maximum length 50 characters</div>									
+								</div>						
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+                            <div class="form-group"
+								ng-class="{'has-error':addEventForm.eventDescription.$touched && addEventForm.eventDescription.$invalid,
+											'has-success':addEventForm.eventDescription.$touched && addEventForm.eventDescription.$valid}">
+                                <label for="eventDescription" class="control-label">Event Description</label>
+                                <input type="textarea" class="form-control" required ng-minlength='5'
+									ng-model='eventForm.description'
+                                       name="eventDescription" placeholder="Event Description...">
+
+                                <div ng-messages="addEventForm.eventDescription.$dirty && addEventForm.eventDescription.$error">
+									<div ng-messages-include="error-messages"></div>
+								</div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+                            <div class="form-group"
+								ng-class="{'has-error':addEventForm.eventDate.$touched && addEventForm.eventDate.$invalid,
+											'has-success':addEventForm.eventDate.$touched && addEventForm.eventDate.$valid}">
+                                <label for="eventDate" class="control-label">Event Date</label>
+                                <input type="date" class="form-control" required ng-model='eventForm.date' name="eventDate"
+                                       placeholder="yyyy-MM-dd">
+
+                                <p class="help-block"
+									ng-show="addEventForm.$dirty && addEventForm.eventDate.$invalid">
+									The event date: yyyy-MM-dd</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+                            <div class="form-group">
+                                <label for="eventLocation" class="control-label">Event Location</label>
+                                <input type="text" class="form-control" ng-model='eventForm.location'
+                                       name="eventLocation" placeholder="Location...">
+
+                                <p class="help-block">The event location</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+                            <div class="form-group">
+                                <label for="eventCategory" class="control-label">Event Category</label>
+                                <select class="form-control"
+                                        ng-model='eventController.selectedCat'
+                                        ng-options="cat.name for cat in eventController.categories track by cat.id"
+                                        <!--ng-options syntax: select as label order by ... value in array track by-->
+										data-width="100%"
+                                        name="eventCategory">
+                                </select>
+
+                                <p class="help-block">Dropdown to select category</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+                            <div class="form-group">
+                                <label for="eventEmailInfo" class="control-label">Email</label>
+                                <input type="email" ng-model='eventForm.email' class="form-control"
+                                       name="eventEmailInfo" placeholder="Email Info...">
+
+                                <p class="help-block">The contact email</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+                            <div class="form-group"
+                                 ng-class="{'has-error':addEventForm.eventPrice.$touched && addEventForm.eventPrice.$invalid,
+											'has-success':addEventForm.eventPrice.$touched && addEventForm.eventPrice.$valid}">
+                                <label for="eventPrice" class="control-label">Price</label>
+                                <input type="text" class="form-control" ng-model='eventForm.price' name="eventPrice"
+                                       required
+                                       placeholder="Price in $...">
+                                <!--bootstrap 'has-error':red text when error & bootstrap 'has-success':green border when correct-->
+                                <div ng-messages="addEventForm.eventPrice.$dirty && addEventForm.eventPrice.$error">
+                                    <div ng-message="required">Event Price is required</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- CHECKBOX & RADIO
+					<div class="row">
+
+						<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">
+							<div class="form-group" >
+								<label for="isSpecialEvent" class="control-label">Special Event?</label>
+								</br>
+								<label>
+									<input type="radio" name="isSpecialEvent" 
+										ng-model='eventController.isSpecialEvent' 
+										value='true'>Yes
+								</label>
+								
+								<label>
+									<input type="radio" name="isSpecialEvent" 
+										ng-model='eventController.isSpecialEvent' 
+										value='false'>No
+								</label>			
+							</div>						
+						</div>
+                    
+
+						<div class="col-md-6 col-sm-6 col-xs-12 col-lg-6">                          
+							<div class="form-group" ng-if="eventController.isSpecialEvent === 'true'">
+								<label for="eventSpecialTypes" class="control-label">Special Event Type:</label>
+								</br>
+								<div ng-repeat="type in eventController.specialTypes">
+									<input type="checkbox" name="eventSpecialTypes" 
+										ng-model='type.checked'
+										ng-true-value="'YES'"
+										ng-false-value="'NO'">{{type.name}} 
+                                </div>
+                            <input type ="checkbox" name="eventSpecialsTypes" 
+								ng-model='eventController.bothSelected' 
+								ng-click='eventController.selectAll()'>Both
+							</div>	
+						</div>
+						
+					</div>
+                    -->
+                    <hr/>
+					<!--Submit & Reset buttons-->
+                    <div class="row">
+                        <div class=" col-md-6 col-sm-6 col-xs-12 col-lg-6">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary"
+									ng-disabled='addEventForm.$invalid'>
+								Submit <i class="glyphicon glyphicon-send"></i></button>
+                                <button type="reset" class="btn btn-default">Reset <i
+                                        class="glyphicon glyphicon-repeat"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div><!-- Panel body-->
+
+        </div>
+    </div>
+	
+	<!-- Table migrate to event-list.html-->
+	<!--
+    <div class="col-md-6 col-sm-8 col-lg-6">
+        {{eventForm|json}}
+        <table class="table table-bordered table-responsive table-hover table-striped">
+            <thead class="text-info">
+                <tr>
+                    <th>Event</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Contact Email</th>
+                    <th>Location</th>
+                    <th>Date</th>
+					<th class="text-warning">TestCol</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="event in eventController.events">
+                    <td>{{event.name}}</td>
+                    <td>{{event.description}}</td>
+                    <td>{{event.category.name}}</td>
+                    <td>{{event.email}}</td>
+                    <td>{{event.location}}</td>
+                    <td>{{event.date | date: "yyyy-MM-dd"}}</td>
+                    <td>{{event.isSpecialEventValue}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+	-->
+
+</div>
+
+
+
+<!--END add-event view-->
+<!--
+<div class="container-fluid">
+    <div class="starter-template">
+        <ng-view></ng-view>
+    </div>
+</div>
+-->
+
+
+<!--
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+-->
+<script src="script/bootstrap/js/bootstrap.min.js"></script>
+<script src="script/angular/angular.min.js"></script>
+<script src="script/angular/angular-route.min.js"></script>
+<script src="script/angular/angular-animate.min.js"></script>
+<script src="script/angular/angular-resource.min.js"></script>
+<script src="script/angular/angular-messages.min.js"></script>
+
+<script src="app.js"></script>
+<script src="controller.js"></script>
+<script src="services/eventFactory.js"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<div class="row" ng-controller='eventManagerController as managerClr'>
+    <div class="col col-md-offset-1 col-md-10 col-sm-8 col-lg-10 col-lg-offset-1">
+        <!--{{eventForm|json}}-->
+
+		Search: <input type="text" ng-model="search.$">
+		Search by Title: <input type="text" ng-model="search.name">
+		Search by Description: <input type="text" ng-model="search.description">
+		Search by Category: <input type="text" ng-model="search.category.name">
+		Exact Match? <input type="checkbox" ng-model='strict'>
+		<button class="default" ng-click="search=undefied">Clear Filter <i class="glyphicon glyphicon-repeat"></i></button>
+		<hr>
+        <table class="table table-bordered table-responsive table-hover table-striped">
+            <thead class="text-info">
+                <tr>
+                    <th>Id</th>
+                    <th>Event Title</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Contact Email</th>
+                    <th>Location</th>
+                    <th>Date</th>
+					<th>Price</th>
+                    <th>Edit | Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="event in managerClr.events | filter:search:strict">
+                    <td>{{event.id}}</td>
+                    <td ng-show="!managerClr.edit[event.id]">{{event.name | customToUpper}}</td>
+                    <td ng-show="!managerClr.edit[event.id]">{{event.description}}</td>
+                    <td ng-show="!managerClr.edit[event.id]">{{event.category.name}}</td>
+                    <td ng-show="!managerClr.edit[event.id]">{{event.email}}</td>
+                    <td ng-show="!managerClr.edit[event.id]">{{event.location}}</td>
+                    <td ng-show="!managerClr.edit[event.id]">{{event.date | date: 'yyyy-MM-dd'}}</td>
+                    <td ng-show="!managerClr.edit[event.id]">{{event.price | currency:'$'}}</td>
+                    <td ng-show="!managerClr.edit[event.id]">
+                        <!--Edit Button-->
+                        <button class="btn btn-info" ng-click="managerClr.edit[event.id] = !managerController.edit[event.id]" >
+                            <i class="glyphicon glyphicon-pencil"></i></button>
+                        <!--Delete Button-->
+                        <button class="btn btn-danger" ng-click="managerClr.delete(event);
+                                                                 managerClr.edit[event.id] = managerController.edit[event.id]">
+                            <i class="glyphicon glyphicon-trash"></i></button>
+                    </td>
+
+                    <td ng-show="managerClr.edit[event.id]"><input type="text" ng-model="event.name"></td>
+                    <td ng-show="managerClr.edit[event.id]"><input type="text" ng-model="event.description"></td>
+                    <td ng-show="managerClr.edit[event.id]"><input type="text" ng-model="event.category.name"></td>
+                    <td ng-show="managerClr.edit[event.id]"><input type="text" ng-model="event.email"></td>
+                    <td ng-show="managerClr.edit[event.id]"><input type="text" ng-model="event.location"></td>
+                    <td ng-show="managerClr.edit[event.id]"><input type="text" ng-model="event.date"></td>
+                    <td ng-show="managerClr.edit[event.id]"><input type="text" ng-model="event.price"></td>
+                    <td ng-show="managerClr.edit[event.id]">
+                        <!--Save Update Button-->
+                        <button class="btn btn-success" ng-click="managerClr.update(event);
+                                                                  managerClr.edit[event.id] = managerController.edit[event.id]">
+                            <i class="glyphicon glyphicon-floppy-disk"></i></button>
+                        <!--Cancel Button-->
+                        <button class="btn btn-warning" ng-click="managerClr.edit[event.id] = managerController.edit[event.id]">
+                            <i class="glyphicon glyphicon-remove-circle"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div> <!--Row: 1st Div -->
